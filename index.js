@@ -8,6 +8,7 @@ const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
+const dialog = electron.dialog;
 
 let mainWindow;
 let menuTemplate = [{
@@ -29,12 +30,21 @@ let menuTemplate = [{
         {
             label: 'Quit',
             accelerator: 'CmdOrCtrl+Q',
-            click: function() { app.quit() }
+            click: function() { app.quit(); }
         }
     ]
 }];
 
 let menu = Menu.buildFromTemplate(menuTemplate);
+
+function showAboutDialog() {
+    dialog.showMessageBox({
+        type: 'info',
+        buttons: ['OK'],
+        message: 'About This App',
+        detail: 'This is awesome app!!!'
+    });
+}
 
 function createMainWindow() {
     Menu.setApplicationMenu(menu);
