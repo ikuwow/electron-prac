@@ -7,10 +7,37 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const Menu = electron.Menu;
 
 let mainWindow;
+let menuTemplate = [{
+    label: 'MyApp',
+    // if Mac, top of menu is application name
+    // if dev env, it is Electron
+    submenu: [
+        {
+            label: 'About this app',
+            accelerator: 'CmdOrCtrl+Shift+A',
+            click: function() { showAboutDialog(); }
+        },
+        { type: 'separator' },
+        {
+            label: 'Preferences',
+            accelerator: 'CmdOrCtrl+,',
+            click: function() { showSettingsWindow(); }
+        },
+        {
+            label: 'Quit',
+            accelerator: 'CmdOrCtrl+Q',
+            click: function() { app.quit() }
+        }
+    ]
+}];
+
+let menu = Menu.buildFromTemplate(menuTemplate);
 
 function createMainWindow() {
+    Menu.setApplicationMenu(menu);
     mainWindow = new BrowserWindow({
         width: 1080, height: 800
     });
