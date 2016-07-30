@@ -9,8 +9,10 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const dialog = electron.dialog;
+const ipcMain = electron.ipcMain;
 
 let mainWindow;
+let settingsWindow;
 let menuTemplate = [{
     label: 'MyApp',
     // if Mac, top of menu is application name
@@ -37,6 +39,10 @@ let menuTemplate = [{
 
 let menu = Menu.buildFromTemplate(menuTemplate);
 
+ipcMain.on('settings_changed', function(event, color) {
+    mainWindow.webContents.send('set_bgcolor', color);
+});
+
 function showAboutDialog() {
     dialog.showMessageBox({
         type: 'info',
@@ -44,6 +50,19 @@ function showAboutDialog() {
         message: 'About This App',
         detail: 'This is awesome app!!!'
     });
+}
+
+function showSettingsWindow() {
+    settingsWindow = new BrowserWindow({
+        width: 1080, height: 800
+    });
+    settingsWindow.loadURL('file://' + __dirname + '/settings.html');
+    settingsWindow.webContents.openDevTools();
+    settingsWindow.show();
+    settingsWindow.on('closed', function() {
+        settingsWindow = null;
+    });
+
 }
 
 function createMainWindow() {

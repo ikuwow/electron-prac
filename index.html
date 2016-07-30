@@ -25,6 +25,8 @@ p {
 
 'use strict';
 
+const ipcRenderer = require('electron').ipcRenderer;
+
 const quote = document.getElementById('quote');
 const quotes = [
     'Just do it!',
@@ -36,6 +38,11 @@ const quotes = [
 window.addEventListener('click', function() {
     quote.innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
 });
+
+ipcRenderer.on('set_bgcolor', function(event, color) {
+    document.body.style.backgroundColor = color;
+});
+
 </script>
 </body>
 </html>
