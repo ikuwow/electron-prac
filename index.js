@@ -60,7 +60,7 @@ function showAboutDialog() {
 
 function showSettingsWindow() {
     settingsWindow = new BrowserWindow({
-        width: 1080, height: 800
+        width: 480, height: 320
     });
     settingsWindow.loadURL('file://' + __dirname + '/settings.html');
     // settingsWindow.webContents.openDevTools();
