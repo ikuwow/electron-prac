@@ -63,7 +63,7 @@ function showSettingsWindow() {
         width: 1080, height: 800
     });
     settingsWindow.loadURL('file://' + __dirname + '/settings.html');
-    settingsWindow.webContents.openDevTools();
+    // settingsWindow.webContents.openDevTools();
     settingsWindow.show();
     settingsWindow.on('closed', function() {
         settingsWindow = null;
@@ -77,7 +77,7 @@ function createMainWindow() {
         width: 1080, height: 800
     });
     mainWindow.loadURL('file://' + __dirname + '/index.html');
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
     mainWindow.on('closed', function() {
         mainWindow = null;
     });
