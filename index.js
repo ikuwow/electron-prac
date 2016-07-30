@@ -15,7 +15,7 @@ const fortune = require(__dirname + '/node_modules/fortune-teller/lib/fortune.js
 
 let mainWindow;
 let settingsWindow;
-let backgroundColor = 'skyblue';
+let backgroundColor = 'Skyblue';
 
 let menuTemplate = [{
     label: 'MyApp',
@@ -51,6 +51,9 @@ ipcMain.on('get_bgcolor', function(event) {
 });
 ipcMain.on('get_fortune', function(event) {
     event.returnValue = fortune.fortune();
+});
+ipcMain.on('bgcolor_changed', function(event, color) {
+    backgroundColor = color;
 });
 
 function showAboutDialog() {

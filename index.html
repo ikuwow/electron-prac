@@ -25,7 +25,33 @@ p {
 
 'use strict';
 
-const ipcRenderer = require('electron').ipcRenderer;
+const electron = require('electron');
+const ipcRenderer = electron.ipcRenderer;
+
+const remote = electron.remote;
+const Menu = remote.Menu;
+const MenuItem = remote.MenuItem;
+
+// right click menu
+let menu = new Menu();
+["Skyblue", "Tomato", "Slategray"].forEach(function(color) {
+    menu.append(new MenuItem({
+        label: color,
+        click: function() {
+            setBackgroundColor(color);
+        }
+    }));
+});
+
+window.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    menu.popup(remote.getCurrentWindow());
+});
+
+function setBackgroundColor(color) {
+    document.body.style.backgroundColor = color;
+    ipcRenderer.send('bgcolor_changed', color);
+}
 
 const quote = document.getElementById('quote');
 
@@ -34,8 +60,9 @@ window.addEventListener('click', function() {
 });
 
 ipcRenderer.on('set_bgcolor', function(event, color) {
-    document.body.style.backgroundColor = color;
+    setBackgroundColor(color);
 });
+
 
 </script>
 </body>
