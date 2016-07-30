@@ -1,5 +1,6 @@
 'use strict';
 
+
 // index.js (main process)
 // - GUI (renderer process)
 // - GUI (renderer process)
@@ -10,6 +11,7 @@ const BrowserWindow = electron.BrowserWindow;
 const Menu = electron.Menu;
 const dialog = electron.dialog;
 const ipcMain = electron.ipcMain;
+const fortune = require(__dirname + '/node_modules/fortune-teller/lib/fortune.js');
 
 let mainWindow;
 let settingsWindow;
@@ -46,6 +48,9 @@ ipcMain.on('settings_changed', function(event, color) {
 });
 ipcMain.on('get_bgcolor', function(event) {
     event.returnValue = backgroundColor;
+});
+ipcMain.on('get_fortune', function(event) {
+    event.returnValue = fortune.fortune();
 });
 
 function showAboutDialog() {

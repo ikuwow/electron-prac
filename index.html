@@ -28,15 +28,9 @@ p {
 const ipcRenderer = require('electron').ipcRenderer;
 
 const quote = document.getElementById('quote');
-const quotes = [
-    'Just do it!',
-    'Done is better than perfect',
-    'Stay hungry, stay foolish',
-    'Ask, do not tell'
-];
 
 window.addEventListener('click', function() {
-    quote.innerHTML = quotes[Math.floor(Math.random() * quotes.length)];
+    quote.innerHTML = ipcRenderer.sendSync('get_fortune').replace(/[\n\r]/g,"<br>");
 });
 
 ipcRenderer.on('set_bgcolor', function(event, color) {
